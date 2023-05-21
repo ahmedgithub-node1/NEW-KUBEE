@@ -1,14 +1,22 @@
-pipeline{
-
-    agent any
-
-    stage{
-
-        statge('Git Checkout'){
-
-            steps{
-
-                script{
-
-                    git branch: 'main', url: 'https://github.com/ahmedgithub-node1/NEW-KUBEE.git'
-                }
+pipeline {
+  agent any
+  tools {nodejs "node" }
+  stages {
+    stage('Cloning Git') {
+      steps {
+        git 'https://github.com/ahmedgithub-node1/MyKubernetes.git',
+            credentialsId: 'your-credentials-id'
+      }
+    }
+    stage('Build') {
+       steps {
+         sh 'npm install'
+       }
+    }
+    stage('Test') {
+      steps {
+        sh 'npm test'
+      }
+    }
+  }
+}
